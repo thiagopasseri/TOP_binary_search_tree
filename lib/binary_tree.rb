@@ -205,5 +205,40 @@ class Tree
     return nil if block_given?
   end
   
+  def height(node = @root, height = 0)
+    current_node = node
+    return 0 if current_node.nil?
+    if current_node.is_leaf?
+      return height
+    else
+      return 1 + [height(current_node.left), height(current_node.right)].max
+    end
+  end
 
+  def depth(value)
+    current_node = @root
+    queue = [current_node]
+    process_array = []
+    while(queue.size != 0)
+      current_node = queue.pop
+      if block_given?
+        yield current_node 
+      else   
+       process_array << current_node.data if current_node
+       process_array << current_node if current_node.nil?
+      end
+      queue.unshift(current_node&.left) if current_node
+      queue.unshift(current_node&.right) if current_node
+    end
+    n = process_array.find_index(value)
+    return nil if n.nil?
+    h = Math.log2(n+1).floor
+    # return process_array unless block_given?
+    return h
+  end
+
+  def balanced?
+    return true if (height(@root.left) - height(@root.right)).abs <= 1
+    false
+  end
 end

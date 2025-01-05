@@ -14,10 +14,37 @@ tree.pretty_print
 # p tree.find_parent(2)
 
 # tree.level_order {|node| puts "node: #{node.data}"}
+# p tree.depth(22)
+# p tree.post_order 
 
-p tree.post_order 
+p tree.height(tree.root.left)
+p tree.balanced?
+tree.insert(18)
+tree.insert(19)
+tree.insert(20)
+tree.insert(21)
 
-tree.post_order  {|node| puts "node: #{node.data}"}
+tree.pretty_print
+p tree.balanced?
+
+
+tree.delete(19)
+tree.pretty_print
+
+p tree.balanced?
+tree.delete(20)
+tree.pretty_print
+
+
+p tree.balanced?
+tree.delete(7)
+tree.pretty_print
+
+p tree.balanced?
+tree.delete(5)
+tree.pretty_print
+
+# tree.post_order  {|node| puts "node: #{node.data}"}
 # tree.pre_order  {|node| puts "node: #{node.data}"}
 # tree.post_order  {|node| puts "node: #{node.data}"}
 

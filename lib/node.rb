@@ -7,8 +7,8 @@ class Node
     @right = right 
   end
 
-  def is_leaf?(node)
-    return !node.left && !node.right
+  def is_leaf?
+    return !left && !right
   end
 #   def to_s
 #     "data: #{@data}, left:#{@left&.data}, right:#{@right&   .data}"
