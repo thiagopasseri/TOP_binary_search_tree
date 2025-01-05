@@ -238,7 +238,14 @@ class Tree
   end
 
   def balanced?
+    puts "left_height: #{height(@root.left)} - right_height: #{height(@root.right)}"
     return true if (height(@root.left) - height(@root.right)).abs <= 1
     false
+  end
+
+  def rebalance
+    array = level_order_iterative.sort.uniq
+    p array
+    @root = build_tree(array)
   end
 end
