@@ -13,10 +13,10 @@ tree.pretty_print
 # p  tree.find_parent(3).data
 # p tree.find_parent(2)
 
-# tree.delete(9)
-p tree.find(10)
+tree.delete(15)
+# p tree.find(1)&.data
 
-# tree.pretty_print
+tree.pretty_print
 
 
 # p tree.sucessor(tree.root).data

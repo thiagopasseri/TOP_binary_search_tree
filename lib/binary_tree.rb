@@ -85,11 +85,10 @@ class Tree
 
     while current_node&.data != value && !current_node.nil?
       current_node = queue.pop
-      next if current_node.nil?
-      queue.unshift current_node.left 
-      queue.unshift current_node.right 
+      queue.unshift current_node.left unless current_node&.left.nil?
+      queue.unshift current_node.right unless current_node&.right.nil?
     end
-    return current_node
+    current_node
   end
 
   def find_parent(value)
@@ -124,7 +123,7 @@ class Tree
 
   def delete(value)
     parent, direction = find_parent(value)
-    puts "parent: #{parent.data}"
+    puts "parent: #{parent&.data}"
     node = find(value)
     puts "node : #{node.data}"
     sucessor_node = sucessor(node)
