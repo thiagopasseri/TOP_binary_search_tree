@@ -13,11 +13,13 @@ tree.pretty_print
 # p  tree.find_parent(3).data
 # p tree.find_parent(2)
 
-tree.delete(15)
-# p tree.find(1)&.data
+# tree.level_order {|node| puts "node: #{node.data}"}
 
-tree.pretty_print
+p tree.post_order 
 
+tree.post_order  {|node| puts "node: #{node.data}"}
+# tree.pre_order  {|node| puts "node: #{node.data}"}
+# tree.post_order  {|node| puts "node: #{node.data}"}
 
 # p tree.sucessor(tree.root).data
 # p tree.pretty_print

@@ -110,8 +110,6 @@ class Tree
     nil
   end
 
-
-  
   def sucessor(node)
     current_node = node&.right
     return node if current_node.nil?
@@ -123,12 +121,9 @@ class Tree
 
   def delete(value)
     parent, direction = find_parent(value)
-    puts "parent: #{parent&.data}"
     node = find(value)
-    puts "node : #{node.data}"
     sucessor_node = sucessor(node)
 
-    puts "node: #{node.data} -> sucessor:#{sucessor_node.data}"
     sucessor_node_data = sucessor_node.data
 
     if node&.left.nil? && node&.right.nil?
@@ -145,12 +140,70 @@ class Tree
       node.right = sucessor_node.right
       node.data = sucessor_node.data
     else                                  # sucessor will have 1 child at maximum
-      puts "sucessor to delete: #{sucessor_node.data}"
       delete(sucessor_node.data) 
       node.data = sucessor_node_data  
     end
   end
 
+  def level_order_iterative
+    current_node = @root
+    queue = [current_node]
+    process_array = []
+    while(queue.any?)
+      current_node = queue.pop
+      if block_given?
+        yield current_node 
+      else   
+       process_array << current_node.data
+      end
+      queue.unshift(current_node.left) if current_node.left 
+      queue.unshift(current_node.right) if current_node.right 
+    end
+    return process_array unless block_given?
+    nil
+  end
+
+  def level_order_recursive(queue =[@root], &block)
+
+    current_node = queue.pop
+    return nil if current_node.nil?
+    yield current_node if block_given?
+    queue.unshift(current_node.left)
+    queue.unshift(current_node.right)
+
+    level_order_recursive(queue, &block ) unless current_node.left.nil?
+    level_order_recursive(queue, &block) unless current_node.right.nil?
+  end
+
+  def in_order(current_node = @root, array = [], &block)
+    # return nil if current_node.nil?
+
+    in_order(current_node.left, array, &block ) unless current_node.left.nil?
+    yield current_node if block_given?
+    array << current_node.data
+    in_order(current_node.right,array, &block) unless current_node.right.nil?
+    return array unless block_given?
+    return nil if block_given?
+  end
+
+  def pre_order(current_node = @root, array = [], &block)
+    return nil if current_node.nil?
+    yield current_node if block_given?
+    array << current_node.data
+    pre_order(current_node.left, array, &block ) unless current_node.left.nil?
+    pre_order(current_node.right, array, &block) unless current_node.right.nil?
+    return array unless block_given?
+    return nil if block_given?
+  end
+
+  def post_order(current_node = @root, array = [], &block)
+    post_order(current_node.left, array, &block ) unless current_node.left.nil?
+    post_order(current_node.right, array, &block) unless current_node.right.nil?
+    yield current_node if block_given?
+    array << current_node.data
+    return array unless block_given?
+    return nil if block_given?
+  end
   
 
 end
